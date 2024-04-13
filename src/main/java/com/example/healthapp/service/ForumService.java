@@ -113,6 +113,11 @@ public class ForumService {
     }
 
 
+    public List<Comment> getComments(String discussionId) {
+        return commentRepository.findAllByDiscussionId(discussionId);
+
+    }
+
     public Discussion toggleVoteOnDiscussion(String discussionId, String userId) {
         Discussion discussion = discussionRepository.findById(discussionId).orElse(null);
         User currentUser = userRepository.findById(userId).orElse(null);

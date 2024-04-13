@@ -116,23 +116,22 @@ public class ForumController {
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-//        } catch (Exception e) {
-//            logger.debug(e.getMessage());
-//            logger.debug(e.getStackTrace().toString());
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add comment to discussion");
-//        }
     }
-
-//    public Discussion upvoteDiscussion(Long id) {
-//        Optional<Discussion> optionalDiscussion = forumService.findById(id);
-//        if (optionalDiscussion.isPresent()) {
-//            Discussion discussion = optionalDiscussion.get();
-//            discussion.setUpvotes(discussion.getUpvotes() + 1); // Increment upvotes count
-//            return discussionRepository.save(discussion);
-//        }
-//        throw new NotFoundException("Discussion not found with id: " + id);
-//    }
-
+    @Operation(
+            summary = "Get comments for a Discussion",
+            description = "Get comments for discussion")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Get comment"),
+            @ApiResponse(responseCode = "404", description = "Invalid discussion id"),
+    })
+    @GetMapping("/{id}/comments")
+    public ResponseEntity<?> getCommentsForDiscussion(@PathVariable String id) {
+        try {
+            return ResponseEntity.ok(this.forumService.getComments(id));
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
 
 
     @Operation(
