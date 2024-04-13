@@ -21,4 +21,5 @@ public class Discussion {
     private User author;
     private Date createdAt;
     private Integer upvotes;
+    private Integer comments;
 }

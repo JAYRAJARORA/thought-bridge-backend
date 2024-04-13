@@ -92,10 +92,8 @@ public class ForumService {
                 .orElseThrow(() -> new NotFoundException("Discussion not found"));
         System.out.println(discussion);
         User user = userRepository.findByUsername(newComment.getAuthor().getUsername());
-        System.out.println("--------");
         System.out.println(user);
         System.out.println(user.getId());
-        System.out.println("----------");
         if (user == null) {
             throw new NotFoundException("User not found");
         }
@@ -103,11 +101,11 @@ public class ForumService {
         comm.setAuthor(user);
         comm.setContent(newComment.getContent());
         comm.setDiscussionId(discussionId);
-        System.out.println("+++++++++");
 
         System.out.println(comm.getAuthor().getUsername());
-
-
+        int currentComments = (discussion.getComments() != null) ? discussion.getComments() : 0;
+        discussion.setComments(currentComments + 1);
+        discussionRepository.save(discussion);
 
         return commentRepository.save(comm);
     }
