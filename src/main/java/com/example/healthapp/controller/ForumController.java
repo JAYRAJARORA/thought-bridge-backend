@@ -39,8 +39,11 @@ public class ForumController {
             @ApiResponse(responseCode = "200", description = "Fetches all discsssions based on type"),
     })
     @GetMapping("")
-    public ResponseEntity<List<Discussion>> getDiscussions(@RequestParam String type) {
-        Page<Discussion> discussionPage = forumService.getDiscussions(type);
+    public ResponseEntity<List<Discussion>> getDiscussions(
+            @RequestParam String type,
+            @RequestParam(name = "userId", required = false) String userId
+    ) {
+        Page<Discussion> discussionPage = forumService.getDiscussions(type, userId);
         List<Discussion> discussions = discussionPage.getContent();
 
         if (discussions.isEmpty()) {

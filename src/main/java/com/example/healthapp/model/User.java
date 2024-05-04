@@ -15,4 +15,5 @@ public class User {
     private String password;
 
     private String role; // therapist or user
+    private String licenseNumber;
 }

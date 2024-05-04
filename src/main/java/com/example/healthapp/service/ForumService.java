@@ -4,6 +4,7 @@ import com.example.healthapp.exception.BadRequestException;
 import com.example.healthapp.exception.NotFoundException;
 import com.example.healthapp.model.*;
 import com.example.healthapp.repository.*;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,14 +40,15 @@ public class ForumService {
         return discussionRepository.findByTypeOrderByUpvotesDesc("articles", pageable);
     }
 
-    public Page<Discussion> getDiscussions(String type) {
+    public Page<Discussion> getDiscussions(String type, String userId) {
         int page = 0;
         int size = 10;
         Sort.Direction direction = Sort.Direction.DESC;
         String[] properties = {"id"};
         Pageable pageable = PageRequest.of(page, size, direction, properties);
         if (type.equals("issues")) {
-            return discussionRepository.findByType("issues", pageable);
+            // show issues relavent to user only
+            return discussionRepository.findByTypeAndUserId("issues", new ObjectId(userId), pageable);
         } else if (type.equals("articles")) {
             return discussionRepository.findByType("articles", pageable);
         } else {

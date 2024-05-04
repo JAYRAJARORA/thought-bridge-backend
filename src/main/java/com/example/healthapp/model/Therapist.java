@@ -2,6 +2,7 @@ package com.example.healthapp.model;
 
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
@@ -9,11 +10,10 @@ import java.util.List;
 public class Therapist extends User {
     private String name;
     private String phoneNumber;
-    private String address;
-    private String city;
-    private String state;
-    private String country;
-    private String postalCode;
+
+    @Field("address")
+    private Address address;
+
     private String specialization;
     private String qualifications;
     @DBRef
@@ -25,13 +25,13 @@ public class Therapist extends User {
     private String description;
     private String gender;
     private Integer age;
-    private List<String> languagesSpoken;
-    private String availability;
+    private List<Language> languagesSpoken;
+    private Availability[] availability;
     private Double experience;
     private String education;
     private String licenseCertification;
-    private List<String> treatmentApproaches;
+    private String treatmentApproaches;
     private String fees;
-    private List<String> insuranceAccepted;
+    private String insuranceAccepted;
     private String additionalServices;
 }

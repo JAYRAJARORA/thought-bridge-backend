@@ -30,9 +30,16 @@ public class AuthService {
 
     public LoginResponse findUser(User user, String role) {
         LoginResponse response = new LoginResponse();
-        User foundUser = userRepository.findByUsernameAndPasswordAndRole(
-                user.getUsername(), user.getPassword(), role
-        );
+        User foundUser = null;
+        if(role.equals("user")) {
+            foundUser = userRepository.findByUsernameAndPasswordAndRole(
+                    user.getUsername(), user.getPassword(), role
+            );
+        } else {
+            foundUser = userRepository.findByUsernameAndPasswordAndRoleAndLicenseNumber(
+                    user.getUsername(), user.getPassword(), role, user.getLicenseNumber()
+            );
+        }
 
         if(foundUser != null) {
             response.setUsername(foundUser.getUsername());

@@ -14,6 +14,9 @@ public interface DiscussionRepository extends MongoRepository<Discussion, String
     @Query("{ $and: [ { 'category.$id': { $in: ?0 } }, { 'type': 'articles' } ] }")
     List<Discussion> findByCategoriesAndType(List<ObjectId> categoryIds);
     Page<Discussion> findByType(String type, Pageable pageable);
+
+    @Query("{ 'type' : ?0, 'author.$id' : ?1 }")
+    Page<Discussion> findByTypeAndUserId(String type, ObjectId userId, Pageable pageable);
     List<Discussion> findByTypeOrderByUpvotesDesc(String type, Pageable pageable);
 
 }
