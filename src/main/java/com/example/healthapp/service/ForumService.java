@@ -47,8 +47,13 @@ public class ForumService {
         String[] properties = {"id"};
         Pageable pageable = PageRequest.of(page, size, direction, properties);
         if (type.equals("issues")) {
-            // show issues relavent to user only
-            return discussionRepository.findByTypeAndUserId("issues", new ObjectId(userId), pageable);
+            // show all the issues for the therapist
+            if(userId == null) {
+                return discussionRepository.findByType("issues", pageable);
+            } else {
+                // show issues relavent to user only
+                return discussionRepository.findByTypeAndUserId("issues", new ObjectId(userId), pageable);
+            }
         } else if (type.equals("articles")) {
             return discussionRepository.findByType("articles", pageable);
         } else {
