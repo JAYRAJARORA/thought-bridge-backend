@@ -34,6 +34,7 @@ Before you begin, ensure you have met the following requirements:
 - **MongoDB Compass**: Recommended for viewing and editing documents
 - **An IDE like IntelliJ IDEA:** Recommended for better development experience.
 - **Postman:** Recommended for testing the APIs.
+- **HTTPie**: Testing APIs using terminal.
 
 #### Steps
 
@@ -66,16 +67,17 @@ Start the Spring Boot application:
 ```bash
 mvn spring-boot:run
 ```
-5. **Test API using Postman**
+5. **Test API using Postman or HTTPie**
 Use Postman to test the APIs
 
 
 ## Example APIs
 
+To test some APIs using HTTPie, you can copy the commands:
 #### Get nearby therapists based on location entered by user
 
-```http
-  GET /api/therapists/nearby
+```bash
+  http GET /api/therapists/nearby?latitude=<latitude>&longitude=<longitude>&radius=<radius>
 ```
 
 | Parameter | Type     | Description                |
@@ -86,8 +88,8 @@ Use Postman to test the APIs
 
 #### Add a review and rating on the therapist. Review content is optional
 
-```http
-  POST /api/therapists/${therapistId}/reviews
+```bash
+  http POST /api/therapists/${therapistId}/reviews userId=<userId> rating=<rating> content=<content>
 ```
 
 | Parameter | Type     | Description                       |
@@ -96,8 +98,8 @@ Use Postman to test the APIs
 
 #### Fetches articles for all the selected categories
 
-```http
-  GET /api/categories/articles
+```bash
+  http GET /api/categories/articles
 ```
 
 | Parameter | Type     | Description                       |
@@ -107,8 +109,8 @@ Use Postman to test the APIs
 
 #### Fetches articles for all the selected categories
 
-```http
-  GET /api/categories/articles
+```bash
+  http GET /api/categories/articles?categoryIds=<categoryIds>
 ```
 
 | Parameter | Type     | Description                       |
@@ -118,14 +120,14 @@ Use Postman to test the APIs
 
 #### Show trending articles
 
-```http
-  GET /api/discussions/trending
+```bash
+  http GET /api/discussions/trending
 ```
 
 #### Add a comment on either an issue or an article
 
-```http
-  POST /api/discussions/${id}/comments
+```bash
+  http POST /api/discussions/${id}/comments content=<content> author=<userId> createdAt=<createdAt> 
 ```
 
 | Parameter | Type     | Description                       |
@@ -134,8 +136,8 @@ Use Postman to test the APIs
 
 #### Upvote or downvote an issue or an article
 
-```http
-  POST /api/discussions/${id}/toggle-vote
+```bash
+  http POST /api/discussions/${id}/toggle-vote?userId=<userId>
 ```
 
 | Parameter | Type     | Description                       |
@@ -145,8 +147,8 @@ Use Postman to test the APIs
 
 #### Update user profile
 
-```http
-  PUT /api/users/${id}
+```bash
+  http PUT /api/users/${id}?type=<therapist or user> username=<username> email=<email> password=<password>
 ```
 
 | Parameter | Type     | Description                       |
